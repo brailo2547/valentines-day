@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Will You Be My Valentine?</title>
+  <title>Feliz dia de San Valentin :3</title>
   <style>
     body {
       display: flex;
@@ -13,11 +13,13 @@
       min-height: 100vh;
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #ffc0cb; /* fondo rosa */
+      background-color: #ffc0cb; /* Fondo rosa */
+      overflow: hidden;
+      position: relative;
     }
     h1 {
       margin-top: 20px;
-      color: #800080; /* lila */
+      color: #800080; /* Lila */
       text-align: center;
     }
     /* Cuadro para insertar imagen o gif en la vista inicial */
@@ -29,7 +31,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: white;
+      background-color: rgb(64, 130, 109);
     }
     #gifBox img {
       max-width: 100%;
@@ -51,26 +53,75 @@
       color: white;
     }
     #yesBtn {
-      background-color: #28a745; /* verde */
+      background-color: #28a745; /* Verde */
     }
     #noBtn {
-      background-color: #dc3545; /* rojo */
+      background-color: #dc3545; /* Rojo */
     }
     /* Contenedor para el mensaje único que se actualiza */
     #messageContainer {
       width: 90%;
       max-width: 600px;
       text-align: center;
-      color: #800080; /* lila */
+      color: #800080; /* Lila */
       margin-bottom: 20px;
       font-size: 20px;
+    }
+
+    /* Estilo para corazones */
+    .heart {
+      position: absolute;
+      color: red;
+      font-size: 30px;
+      animation: heartAnimation 1s infinite, fadeOut 3s forwards;
+    }
+
+    @keyframes heartAnimation {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100px);
+      }
+    }
+
+    .animal-cursor {
+      position: absolute;
+      pointer-events: none;
+      display: none; /* Inicialmente, el cursor no será visible */
+      transition: opacity 0.3s ease-in-out;
+      width: 70px; /* Ajustar tamaño aquí */
+      height: 70px; /* Ajustar tamaño aquí */
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes fadeOutCursor {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <h1>Will you be my Valentine?</h1>
-  
-  <!-- Cuadro para insertar imagen o gif (carga desde un link) -->
+  <h1>Quieres ser mi San Valentin?</h1>
+
+  <!-- Cuadro para gif-->
   <div id="gifBox">
     <img src="https://media.tenor.com/E_z_0ENSscoAAAAM/gato-corazon.gif" alt="Gif or Image" />
   </div>
@@ -79,11 +130,45 @@
     <button id="yesBtn">Yes</button>
     <button id="noBtn">No</button>
   </div>
-  
-  <!-- Contenedor donde se mostrará el mensaje actual -->
+
+  <!-- Contenedor donde se mostrará el mensaje -->
   <div id="messageContainer"></div>
 
+  <!-- Cursor animado -->
   <script>
+    const catImageUrl = "https://static-cdn.jtvnw.net/jtv_user_pictures/03ec66bb-196c-4742-a340-40a11842ab6a-profile_image-300x300.png";
+    const dogImageUrl = "https://i.pinimg.com/200x150/fe/f1/92/fef1925978d43ed8a211a76c6686d1d0.jpg";
+    
+    let isCat = true; // Para alternar entre gato y perro
+    const animalCursor = document.createElement("img");
+    animalCursor.classList.add("animal-cursor");
+    document.body.appendChild(animalCursor);
+
+    function changeCursor(event) {
+      if (isCat) {
+        animalCursor.src = catImageUrl; // Establece la imagen del gato
+      } else {
+        animalCursor.src = dogImageUrl; // Establece la imagen del perro
+      }
+
+      // Cambiar visibilidad y agregar animación
+      animalCursor.style.display = "block";
+      animalCursor.style.left = `${event.pageX - 20}px`; // Restar 20px para centrar la imagen
+      animalCursor.style.top = `${event.pageY - 20}px`; // Restar 20px para centrar la imagen
+      animalCursor.style.animation = "fadeIn 0.3s forwards"; // Animación de fade-in
+
+      // Después de 1 segundo (duración del fade-in), inicia el fade-out
+      setTimeout(() => {
+        animalCursor.style.animation = "fadeOutCursor 1s forwards"; // Animación de fade-out
+      }, 300); // El fade-out empieza después de 0.3 segundos
+      isCat = !isCat; // Cambiar a la siguiente imagen
+    }
+
+    document.addEventListener("click", changeCursor);
+  </script>
+
+  <script>
+    
     let noClicks = 0;
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
@@ -92,35 +177,60 @@
 
     // Frases a mostrar con cada click en "No"
     const phrases = [
-      "Porfa di que si",
+      "Porfa di que si :3",
       "No te vas a arrepentir lo prometo",
-      "Andale duendesilla di que si y te digo duende rabioso :3",
+      "Andale di que si y me harás muy feliz",
       "Porfisssss y te dejo de molestar poquito",
-      "Prometo que te va a gustar la sorpresa",
-      "Dame chance chi:3",
+      "Prometo que te va a gustar la sorpresa :D",
+      "Dame una oportunidad sippp",
       "Y te enseño una sorpresita je je",
-      "Di que si y vemos Soy Luna entero :D"
+      "Di que si y te regalo una 🌷 :3",
+      "¡Es el momento de decir que sí!"
     ];
 
+    // Función para agregar corazones aleatorios
+    function addRandomHearts(numHearts) {
+      for (let i = 0; i < numHearts; i++) {
+        const heart = document.createElement('span');
+        heart.classList.add('heart');
+        heart.innerHTML = '❤️';
+        
+        // Ubicación aleatoria en la pantalla
+        heart.style.left = `${Math.random() * window.innerWidth}px`;
+        heart.style.top = `${Math.random() * window.innerHeight}px`;
+
+        // Agregar el corazón al body
+        document.body.appendChild(heart);
+        
+        // Eliminar el corazón después de que termine la animación
+        setTimeout(() => {
+          heart.remove();
+        }, 3000); // Después de 3 segundos se elimina
+      }
+    }
+
+    // Inicialización de los corazones al cargar la página
+    setInterval(() => {
+      addRandomHearts(3); // Agrega 3 corazones nuevos cada intervalo
+    }, 100); // Agregar corazones cada 500 ms (0.5 segundos)
+
+    // Función para agregar más corazones al presionar "Sí"
+    function addMoreHearts() {
+      addRandomHearts(20); // Agrega más corazones cuando se presiona "Sí"
+    }
+
+    // Continuar con el proceso de interacción
     noBtn.addEventListener("click", () => {
-      if (noClicks >= 8) return; // Solo se permiten 8 clicks
-      
+      if (noClicks >= 9) return; // Solo se permiten 9 clicks
       noClicks++;
-
-      // Incrementa la separación entre botones
       buttonsContainer.style.gap = (20 + noClicks * 20) + "px";
-
-      // Actualiza el mensaje mostrado (se sobrescribe el anterior)
       messageContainer.innerText = phrases[noClicks - 1];
       messageContainer.style.marginTop = noClicks * 10 + "px";
-
-      // Calcula la escala del botón Yes
       let scaleFactor = 1 + (noClicks * 0.5);
 
-      if (noClicks < 8) {
+      if (noClicks < 9) {
         yesBtn.style.transform = "scale(" + scaleFactor + ")";
-      } else if (noClicks === 8) {
-        // En el octavo click, el botón Yes se expande casi a pantalla completa
+      } else if (noClicks === 9) {
         yesBtn.style.position = "fixed";
         yesBtn.style.top = "50%";
         yesBtn.style.left = "50%";
@@ -128,54 +238,45 @@
         yesBtn.style.width = "90vw";
         yesBtn.style.height = "90vh";
         yesBtn.style.fontSize = "calc(20px * " + scaleFactor + ")";
-        // Oculta el botón No para que ya no se pueda presionar
         noBtn.style.display = "none";
       }
     });
 
     yesBtn.addEventListener("click", () => {
-      // Al presionar Yes, se reemplaza el contenido de la página por la vista final
-      document.body.innerHTML = "";
-
-      // Contenedor final
+        
+      // Modificar solo la parte que deseas cambiar
       const finalContainer = document.createElement("div");
       finalContainer.style.display = "flex";
       finalContainer.style.flexDirection = "column";
       finalContainer.style.alignItems = "center";
       finalContainer.style.justifyContent = "center";
       finalContainer.style.minHeight = "100vh";
-      finalContainer.style.backgroundColor = "#ffc0cb"; // fondo rosa
+      finalContainer.style.backgroundColor = "#ffc0cb"; // Fondo rosa
 
-      // Mensaje final
       const finalMessage = document.createElement("h1");
-      finalMessage.innerText = "Graciasssss Lorenita:3 no te vas a defraudar, ahora si vemos Soy Luna :D";
-      finalMessage.style.color = "#800080"; // lila
+      finalMessage.innerText = "Graciasssss Loreeeee :3 no te vas a arrepentir <3";
+      finalMessage.style.color = "#800080"; // Lila
       finalMessage.style.textAlign = "center";
       finalContainer.appendChild(finalMessage);
 
-      // Cuadro para el gif final
       const finalGifBox = document.createElement("div");
       finalGifBox.style.width = "300px";
       finalGifBox.style.height = "300px";
-      finalGifBox.style.margin = "20px";
-      finalGifBox.style.border = "2px solid #800080";
       finalGifBox.style.display = "flex";
       finalGifBox.style.alignItems = "center";
       finalGifBox.style.justifyContent = "center";
-      finalGifBox.style.backgroundColor = "white";
-
-      const finalGif = document.createElement("img");
-      finalGif.src = "https://media.tenor.com/GTlDCm4P4EsAAAAM/kitty-kitten.gif"; // Reemplaza con el link de tu gif final
-      finalGif.alt = "Final Gif";
-      finalGif.style.maxWidth = "100%";
-      finalGif.style.maxHeight = "100%";
-      finalGifBox.appendChild(finalGif);
-
+      finalGifBox.style.border = "2px solid #800080";
+      const gif = document.createElement("img");
+      gif.src = "https://media.tenor.com/GTlDCm4P4EsAAAAM/kitty-kitten.gif";
+      finalGifBox.appendChild(gif);
       finalContainer.appendChild(finalGifBox);
+      
+
+      document.body.innerHTML = ""; // Limpiar solo lo necesario
       document.body.appendChild(finalContainer);
+      document.body.appendChild(animalCursor);
+    
     });
   </script>
 </body>
 </html>
-
-
